@@ -7,7 +7,19 @@ for (let col = 0; col < GRID_SIZE; col++) {
     for (let row = 0; row < GRID_SIZE; row++) {
         let cell = document.createElement("div")
         cell.className = "cell";
-        rowDiv.appendChild(cell);
+        rowDiv.appendChild(createCell());
     }
     grid.appendChild(rowDiv);
+}
+
+function createCell() {
+    let cell = document.createElement("div");
+    cell.className = "cell";
+    cell.addEventListener("mouseover", (e) => 
+        cell.style.backgroundColor = getCellColor())
+    return cell;
+}
+
+function getCellColor() {
+    return "black";
 }
