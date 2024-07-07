@@ -4,6 +4,9 @@ body {
     justify-content: center;
     align-items: center;
     gap: 8px;
+    margin: 0;
+    height: 100vh; /* Set the height of the body to 100% of the viewport height */
+    overflow: hidden; /* Hide any content that overflows the body */
 }
 
 #grid {
@@ -32,4 +35,20 @@ button {
 
 #grid-size-display {
     font-size: 15px;
+}
+
+#buttons-bar {
+    display: flex;
+    flex-basis: auto;
+    align-items: center;
+    gap: 8px;
+}
+
+.btns-label {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    flex-basis: auto;
+    text-align: center;
+    border: 1px solid black;
 }
