@@ -5,8 +5,6 @@ for (let col = 0; col < GRID_SIZE; col++) {
     let rowDiv = document.createElement("div");
     rowDiv.className = "row";
     for (let row = 0; row < GRID_SIZE; row++) {
-        let cell = document.createElement("div")
-        cell.className = "cell";
         rowDiv.appendChild(createCell());
     }
     grid.appendChild(rowDiv);
