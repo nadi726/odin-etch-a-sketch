@@ -1,8 +1,13 @@
 const INITIAL_GRID_SIZE = 16;
 const grid = document.querySelector("#grid");
-let size_btn = document.querySelector("#set-size-btn");
-let reset_btn = document.querySelector("#reset-grid-btn");
-let grid_size = INITIAL_GRID_SIZE;
+const sizeBtn = document.querySelector("#set-size-btn");
+const resetBtn = document.querySelector("#reset-grid-btn");
+const setColorBlackBtn = document.querySelector("#set-color-black-btn");
+const setColorRandomBtn = document.querySelector("#set-color-random-btn");
+let gridSize = INITIAL_GRID_SIZE;
+
+// Either "black" or "random"
+let current_color = "black";
 
 function createGrid(size) {
     clearGrid()
@@ -16,8 +21,8 @@ function createGrid(size) {
         grid.appendChild(rowDiv);
     }
 
-    grid_size_display = document.querySelector("#grid-size-display");
-    grid_size_display.textContent = `${size}x${size}`;
+    gridSizeDisplay = document.querySelector("#grid-size-display");
+    gridSizeDisplay.textContent = `${size}x${size}`;
 }
 
 function clearGrid() {
@@ -27,20 +32,20 @@ function clearGrid() {
 }
 
 function resetGrid() {
-    createGrid(grid_size);
+    createGrid(gridSize);
 }
 
 function setGridSize() {
-    let newSize = prompt("Enter new size: 1-100: ")
-
+    let newSize = prompt("Enter new size: 1-100: ");
     newSize = parseInt(newSize);
+
     if (Number.isNaN(newSize) || newSize > 100 || newSize < 1){
         alert("Invalid size.")
         return;
     }
     
-    grid_size = newSize;
-    createGrid(grid_size);
+    gridSize = newSize;
+    createGrid(gridSize);
 }
 
 function createCell() {
@@ -52,9 +57,28 @@ function createCell() {
 }
 
 function getCellColor() {
-    return "black";
+    if (current_color == "black") {
+        return "black";
+    } else {
+        return getRandomColor()
+    }
 }
 
-createGrid(grid_size);
-size_btn.addEventListener("click", setGridSize)
-reset_btn.addEventListener("click", resetGrid)
+function getRandomColor() {
+    const r = getRandomInt(256);
+    const g = getRandomInt(256);
+    const b = getRandomInt(256);
+    let color = `rgb(${r},${g},${b})`;
+    return color;
+}
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+
+createGrid(gridSize);
+sizeBtn.addEventListener("click", setGridSize);
+resetBtn.addEventListener("click", resetGrid);
+setColorBlackBtn.addEventListener("click", () => current_color = "black");
+setColorRandomBtn.addEventListener("click", () => current_color = "random")
