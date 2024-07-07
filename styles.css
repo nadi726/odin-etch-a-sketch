@@ -3,6 +3,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 8px;
 }
 
 #grid {
@@ -22,4 +23,13 @@ body {
 .cell {
     border: 1px solid black;
     flex: 1;
+}
+
+button {
+    font-size: 20px;
+    margin: 10px;
+}
+
+#grid-size-display {
+    font-size: 15px;
 }
