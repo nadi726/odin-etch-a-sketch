@@ -4,10 +4,21 @@ const sizeBtn = document.querySelector("#set-size-btn");
 const resetBtn = document.querySelector("#reset-grid-btn");
 const setColorBlackBtn = document.querySelector("#set-color-black-btn");
 const setColorRandomBtn = document.querySelector("#set-color-random-btn");
+const darkeningOnBtn = document.querySelector("#darkening-on-btn");
+const darkeningOffBtn = document.querySelector("#darkening-off-btn");
+
 let gridSize = INITIAL_GRID_SIZE;
 
+// ENUMS
+//
 // Either "black" or "random"
 let current_color = "black";
+
+// Either "fill" or "darken"
+// "fill" puts a new color regardless of whether the cell was empty,
+// while "darken" will place a new color only if the cell was empty,
+// with small opacity value, and otherwise will only raise the opacity.
+let mode = "fill";
 
 function createGrid(size) {
     clearGrid()
@@ -51,8 +62,21 @@ function setGridSize() {
 function createCell() {
     let cell = document.createElement("div");
     cell.className = "cell";
-    cell.addEventListener("mouseover", (e) => 
-        cell.style.backgroundColor = getCellColor())
+    
+    cell.addEventListener("mouseover", function(e) {
+        let isFirstHover = cell.style.backgroundColor == "";
+
+        if (mode == "fill") {
+            cell.style.backgroundColor = getCellColor();
+            cell.style.opacity = 1;
+        } else if (isFirstHover) {
+            cell.style.backgroundColor = getCellColor();
+            cell.style.opacity = 0.1;
+        } else {
+            let prevOpacity = parseFloat(cell.style.opacity);
+            cell.style.opacity = Math.min(1.0, prevOpacity + 0.1);
+        }
+    })
     return cell;
 }
 
@@ -74,7 +98,7 @@ function getRandomColor() {
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
-  }
+}
 
 
 createGrid(gridSize);
@@ -82,3 +106,5 @@ sizeBtn.addEventListener("click", setGridSize);
 resetBtn.addEventListener("click", resetGrid);
 setColorBlackBtn.addEventListener("click", () => current_color = "black");
 setColorRandomBtn.addEventListener("click", () => current_color = "random")
+darkeningOnBtn.addEventListener("click", () => mode = "darkening")
+darkeningOffBtn.addEventListener("click", () => mode = "fill")
